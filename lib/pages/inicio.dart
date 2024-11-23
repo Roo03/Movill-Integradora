@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movil_integradora/pages/home.dart';
+import 'package:movil_integradora/pages/controllers.dart';
 import 'package:movil_integradora/widgets/custom_buttom.dart';
 
 class Inicio extends StatelessWidget {
@@ -9,6 +9,7 @@ class Inicio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 30, 44, 63),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -67,7 +68,7 @@ class Inicio extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                const Home()), 
+                                const Controller()), 
                       );
                     },
                   ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:movil_integradora/pages/controllers.dart';
-import 'package:movil_integradora/pages/home.dart';
+import 'package:movil_integradora/pages/Acerca%20de.dart';
 import 'package:movil_integradora/pages/manual.dart';
 
 class Soporte extends StatelessWidget {
@@ -11,6 +11,7 @@ class Soporte extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 30, 44, 63),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -64,12 +65,12 @@ class Soporte extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("Inicio"),
+              leading: const Icon(Icons.control_camera),
+              title: const Text("Controlador"),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Home()),
+                  MaterialPageRoute(builder: (context) => const Controller()),
                 );
               },
             ),
@@ -84,21 +85,23 @@ class Soporte extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.control_camera),
-              title: const Text("Controladores"),
+              leading: const Icon(Icons.contact_mail),
+              title: const Text("Soporte"),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Controller()),
+                  MaterialPageRoute(builder: (context) => const Soporte()),
                 );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.contact_mail),
-              title: const Text("Soporte"),
+              leading: const Icon(Icons.info),
+              title: const Text("Acerca de"),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Soporte()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Acercade()),
+                );
               },
             ),
           ],
@@ -209,12 +212,13 @@ class Soporte extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     "Gracias a tu opinion podemos cambiar y mejorar mas nuestra app, asi como atender opiniones que mejoren lo que hacemos, tu opinion cuenta, compartenos tu opinion",
-                    style: GoogleFonts.inter(fontSize: 16),
+                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
                   ),
                   const SizedBox(height: 30),
                   Form(
@@ -227,7 +231,7 @@ class Soporte extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Colors.teal,
+                            color: Colors.white
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -333,7 +337,7 @@ class Soporte extends StatelessWidget {
                           ),
                           child: const Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children:[  
+                            children: [
                               SizedBox(height: 24),
                               Expanded(
                                 child: Column(
@@ -358,9 +362,7 @@ class Soporte extends StatelessWidget {
                                           color: Colors.black,
                                           size: 16,
                                         ),
-                                        SizedBox(
-                                            width:
-                                                5), 
+                                        SizedBox(width: 5),
                                         Text(
                                           "+123 456 789",
                                           style: TextStyle(
@@ -368,9 +370,7 @@ class Soporte extends StatelessWidget {
                                             color: Colors.blueGrey,
                                           ),
                                         ),
-                                        SizedBox(
-                                            width:
-                                                15),
+                                        SizedBox(width: 15),
 
                                         // Icono de Gmail
                                         Icon(

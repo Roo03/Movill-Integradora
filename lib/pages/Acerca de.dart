@@ -5,12 +5,13 @@ import 'package:movil_integradora/pages/controllers.dart';
 import 'package:movil_integradora/pages/manual.dart';
 import 'package:movil_integradora/pages/soporte.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class Acercade extends StatelessWidget {
+  const Acercade({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 30, 44, 63),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -58,19 +59,18 @@ class Home extends StatelessWidget {
                       radius: 50,
                       backgroundColor: Colors.white,
                       backgroundImage: AssetImage("assets/img/Logo.jpeg"),
-                      
                     ),
                   ),
                 ],
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("Inicio"),
+              leading: const Icon(Icons.control_camera),
+              title: const Text("Controlador"),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Home()),
+                  MaterialPageRoute(builder: (context) => const Controller()),
                 );
               },
             ),
@@ -85,22 +85,22 @@ class Home extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.control_camera),
-              title: const Text("Controladores"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Controller()),
-                );
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.contact_mail),
               title: const Text("Soporte"),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Soporte())
+                  MaterialPageRoute(builder: (context) => const Soporte()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text("Acerca de"),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Acercade()),
                 );
               },
             ),
@@ -212,12 +212,13 @@ class Home extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     "Somos un equipo comprometido con el cuidado del medio ambiente y la preservación de los recursos de agua naturales en Yucatán. Nuestra misión es ayudar con la limpieza de los cuerpos de agua para ayudar a su preservacion y limpieza.",
-                    style: GoogleFonts.inter(fontSize: 16),
+                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
                   ),
                   const SizedBox(height: 30),
                   Container(
@@ -262,7 +263,7 @@ class Home extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.blueGrey,
+                                  color: Colors.white,
                                 ),
                               ),
                               SizedBox(height: 8.0),
@@ -270,7 +271,7 @@ class Home extends StatelessWidget {
                                 "Los cenotes en Yucatán están sufriendo graves problemas de contaminación debido a la actividad humana, como la descarga de aguas residuales, el uso de fertilizantes y el turismo descontrolado. Estos cuerpos de agua subterráneos son esenciales para la biodiversidad y el suministro de agua, y su deterioro representa una amenaza ambiental significativa.",
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.blueGrey,
+                                  color: Colors.white,
                                 ),
                                 textAlign: TextAlign.justify,
                               ),
@@ -283,7 +284,7 @@ class Home extends StatelessWidget {
                   const SizedBox(height: 28),
                   Text(
                     "Cada miembro esta comprometido en aportar de la mejor manera posible a ayudar con el cuidado del medio ambiente.",
-                    style: GoogleFonts.inter(fontSize: 16),
+                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 30),
@@ -292,12 +293,13 @@ class Home extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     "Gracias a este problema saltamos a la accion y a la contribucion para ayudar al medio ambiente y diseñamos nuestro producto El Guardian Del Agua.",
-                    style: GoogleFonts.inter(fontSize: 16),
+                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
                   ),
                   const SizedBox(height: 20),
                   Center(
@@ -315,7 +317,7 @@ class Home extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     "Diseñado para la limpieza y preservacion de los cuerpos de agua, principalmente ayudando a los cenotes a ser limpiados garantizando un mejor cuidado del patrimonio cultural yucateco .",
-                    style: GoogleFonts.inter(fontSize: 16),
+                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
                   ),
                 ],
               ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:movil_integradora/pages/controllers.dart';
-import 'package:movil_integradora/pages/home.dart';
+import 'package:movil_integradora/pages/Acerca%20de.dart';
 import 'package:movil_integradora/pages/soporte.dart';
 import 'package:movil_integradora/widgets/manual_cards.dart';
 
@@ -12,6 +12,7 @@ class Manual extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 30, 44, 63),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -63,12 +64,12 @@ class Manual extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text("Inicio"),
+              leading: const Icon(Icons.control_camera),
+              title: const Text("Controlador"),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Home()),
+                  MaterialPageRoute(builder: (context) => const Controller()),
                 );
               },
             ),
@@ -83,21 +84,23 @@ class Manual extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.control_camera),
-              title: const Text("Controladores"),
+              leading: const Icon(Icons.contact_mail),
+              title: const Text("Soporte"),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Controller()),
+                  MaterialPageRoute(builder: (context) => const Soporte()),
                 );
               },
             ),
             ListTile(
-              leading: const Icon(Icons.contact_mail),
-              title: const Text("Soporte"),
+              leading: const Icon(Icons.info),
+              title: const Text("Acerca de"),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Soporte()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Acercade()),
+                );
               },
             ),
           ],
@@ -208,38 +211,77 @@ class Manual extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     "Hemos diseñado este manual de usuario para ayudar a nuestros clientes y evitar inconvenientes con nuestro producto.",
-                    style: GoogleFonts.inter(fontSize: 16),
+                    style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
+                    
                   ),
                   const SizedBox(height: 30),
                   const ManualCard(
-                    title: "Proceso de encendito",
-                    description: "No dudes mas, aprende a como encender nuestro roducto",
+                    title: "Programacion antes del uso",
+                    description: "Revision previa y pruebas iniciales",
                     steps: [
-                      "1. Precione el boton.",
-                      "2. Verifique que el LED indicador se encienda.",
+                      "1. Asegúrate de que todas las conexiones eléctricas estén firmes y en buen estado.",
+                      "2. Verifica que las hélices estén libres de obstrucciones y giren sin dificultad.",
                       "3. Espere hasta que el dispositivo complete su inicio.",
+                      "4. Realiza una prueba en tierra firme para verificar que los controles del barco respondan correctamente",
+                      "5. Comprueba que no haya fugas visibles en la estructura del casco"
                     ],
-                    imagePath:"assets/img/Manual.png",
-                    
+                    imagePath: "assets/img/Manual.png",
                   ),
                   const SizedBox(height: 20),
                   const ManualCard(
-                    title: "Proceso de encendito",
-                    description: "No dudes mas, aprende a como encender nuestro roducto",
+                    title: "Proceso de  uso",
+                    description: "Encendido, Manejo, Conexion y sincronizacion",
                     steps: [
-                      "1. Precione el boton.",
-                      "2. Verifique que el LED indicador se encienda.",
-                      "3. Espere hasta que el dispositivo complete su inicio.",
+                      "1. Verifica que las baterías estén cargadas tanto en el barco como en el control remoto.",
+                      "2. Enciende primero el control remoto y luego el barco para asegurar la sincronización.",
+                      "3. Asegúrate de que el control remoto esté conectado al barco. Esto puede indicarse mediante una luz LED o una señal audible.",
+                      "4. Familiarízate con los controles básicos: Acelerador: Controla la velocidad, Dirección: Gira el barco hacia la izquierda o derecha."
                     ],
-                    imagePath:"assets/img/Manual.png",
-                    
+                    imagePath: "assets/img/Manual.png",
                   ),
                   const SizedBox(height: 20),
+                  const ManualCard(
+                    title: "Proceso de  uso",
+                    description: "Distancia maxima y apagado",
+                    steps: [
+                      "1. No alejes el barco más allá del rango del control remoto, que suele ser de 30-50 metros, dependiendo del modelo.",
+                      "2. Al finalizar, apaga primero el barco y luego el control remoto.",
+                      "3. Recuerda usar el barco en aguas tranquilas para mayor estabilidad y control.",
+                    ],
+                    imagePath: "assets/img/Manual.png",
+                  ),
+                  const SizedBox(height: 20),
+                  const ManualCard(
+                    title: "Cuidados, pasos iniciales",
+                    description:
+                        "Mantenimiento al casco, componentes y baterias",
+                    steps: [
+                      "1. Limpia el casco con un paño húmedo después de cada uso para retirar residuos o salitre si se usó en agua salada.",
+                      "2. Inspecciona regularmente para asegurarte de que no haya grietas o fugas.",
+                      "3. Asegúrate de que los compartimientos eléctricos estén bien sellados para evitar la entrada de agua.",
+                      "4. Almacena las baterias en un lugar fresco y seco para prolongar su vida util."
+                    ],
+                    imagePath: "assets/img/Manual.png",
+                  ),
+                  const SizedBox(height: 20),
+                  const ManualCard(
+                    title: "Cuidados,  segundos pasos",
+                    description:
+                        "Almacenamiento y cuidado de los motores/elices",
+                    steps: [
+                      "1. Guarda el barco en un lugar seco, protegido del polvo y la luz directa del sol.",
+                      "2. Evita colocar objetos pesados encima que puedan dañar la estructura.",
+                      "3. Revisa que no haya obstrucciones en las hélices antes y después de cada uso.",
+                      "4. Si notas ruido anormal en los motores, realiza una limpieza o lubricación según las indicaciones del fabricante."
+                    ],
+                    imagePath: "assets/img/Manual.png",
+                  ),
                 ],
               ),
             ),
