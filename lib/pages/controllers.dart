@@ -2,7 +2,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:camera/camera.dart';
-import 'package:movil_integradora/pages/Acerca%20de.dart';
+import 'package:movil_integradora/pages/acerca_de.dart';
 import 'package:movil_integradora/pages/manual.dart';
 import 'package:movil_integradora/pages/soporte.dart';
 

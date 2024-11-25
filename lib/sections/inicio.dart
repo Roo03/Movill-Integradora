@@ -37,7 +37,7 @@ class Inicio extends StatelessWidget {
                 top: MediaQuery.of(context).size.height * 0.3,
               ),
               child: Text(
-                "AquaClean",
+                "Bienvenidos",
                 style: GoogleFonts.inter(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,

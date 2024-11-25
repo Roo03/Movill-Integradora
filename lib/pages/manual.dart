@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:movil_integradora/pages/controllers.dart';
-import 'package:movil_integradora/pages/Acerca%20de.dart';
+import 'package:movil_integradora/pages/acerca_de.dart';
 import 'package:movil_integradora/pages/soporte.dart';
 import 'package:movil_integradora/widgets/manual_cards.dart';
 
@@ -117,87 +117,100 @@ class Manual extends StatelessWidget {
                   image: AssetImage("assets/img/Manual3.png"),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 44, right: 16, left: 16, bottom: 24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Manual de usuario",
-                              style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Conoce",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black
+                          .withOpacity(0.5), 
+                      Colors.black.withOpacity(0.5),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 44, right: 16, left: 16, bottom: 24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Manual de usuario",
+                                style: GoogleFonts.inter(
                                     color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Conoce",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                const CircleAvatar(
-                                  radius: 2,
-                                  backgroundColor: Colors.white,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Descubre",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    color: Colors.white,
+                                  const SizedBox(width: 5),
+                                  const CircleAvatar(
+                                    radius: 2,
+                                    backgroundColor: Colors.white,
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                const CircleAvatar(
-                                  radius: 2,
-                                  backgroundColor: Colors.white,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Controla",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    color: Colors.white,
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Descubre",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                const CircleAvatar(
-                                  radius: 2,
-                                  backgroundColor: Colors.white,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Aprende",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    color: Colors.white,
+                                  const SizedBox(width: 5),
+                                  const CircleAvatar(
+                                    radius: 2,
+                                    backgroundColor: Colors.white,
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Controla",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const CircleAvatar(
+                                    radius: 2,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Aprende",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -209,16 +222,14 @@ class Manual extends StatelessWidget {
                   Text(
                     "Aprende cómo usar nuestro producto",
                     style: GoogleFonts.inter(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     "Hemos diseñado este manual de usuario para ayudar a nuestros clientes y evitar inconvenientes con nuestro producto.",
                     style: GoogleFonts.inter(fontSize: 16, color: Colors.white),
-                    
                   ),
                   const SizedBox(height: 30),
                   const ManualCard(

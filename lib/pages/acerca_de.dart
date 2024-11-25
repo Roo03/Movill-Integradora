@@ -118,87 +118,100 @@ class Acercade extends StatelessWidget {
                   image: AssetImage("assets/img/Fondo3.jpg"),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 44, right: 16, left: 16, bottom: 24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Bienvenidos",
-                              style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Conoce",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black
+                          .withOpacity(0.1), 
+                      Colors.black.withOpacity(0.4 ),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 44, right: 16, left: 16, bottom: 24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Bienvenidos",
+                                style: GoogleFonts.inter(
                                     color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Conoce",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                const CircleAvatar(
-                                  radius: 2,
-                                  backgroundColor: Colors.white,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Descubre",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    color: Colors.white,
+                                  const SizedBox(width: 5),
+                                  const CircleAvatar(
+                                    radius: 2,
+                                    backgroundColor: Colors.white,
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                const CircleAvatar(
-                                  radius: 2,
-                                  backgroundColor: Colors.white,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Controla",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    color: Colors.white,
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Descubre",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 5),
-                                const CircleAvatar(
-                                  radius: 2,
-                                  backgroundColor: Colors.white,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Aprende",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12,
-                                    color: Colors.white,
+                                  const SizedBox(width: 5),
+                                  const CircleAvatar(
+                                    radius: 2,
+                                    backgroundColor: Colors.white,
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Controla",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const CircleAvatar(
+                                    radius: 2,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Aprende",
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -210,10 +223,9 @@ class Acercade extends StatelessWidget {
                   Text(
                     "¿Quienes somos?",
                     style: GoogleFonts.inter(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -291,10 +303,9 @@ class Acercade extends StatelessWidget {
                   Text(
                     "Lo que hacemos",
                     style: GoogleFonts.inter(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   const SizedBox(height: 10),
                   Text(
