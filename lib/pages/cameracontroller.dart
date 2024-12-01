@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mjpeg/flutter_mjpeg.dart';
 import 'package:movil_integradora/pages/acerca_de.dart';
 import 'package:movil_integradora/pages/manual.dart';
 import 'package:movil_integradora/pages/soporte.dart';
+import 'package:flutter_mjpeg/flutter_mjpeg.dart';
 
-class Controller extends StatefulWidget {
-  const Controller({super.key});
+class Cameracontroller extends StatefulWidget {
+  const Cameracontroller({super.key});
 
   @override
-  State<Controller> createState() => _ControllerState();
+  State<Cameracontroller> createState() => _CameracontrollerState();
 }
 
 Widget _buildDrawerItem(
@@ -25,15 +25,12 @@ Widget _buildDrawerItem(
   );
 }
 
-class _ControllerState extends State<Controller> {
+class _CameracontrollerState extends State<Cameracontroller> {
   final TextEditingController _ipController = TextEditingController();
   String? streamUrl;
   bool isConnected = false;
-
   @override
   Widget build(BuildContext context) {
-    MediaQuery.of(context).orientation == Orientation.landscape;
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 44, 63),
       extendBodyBehindAppBar: true,
@@ -98,7 +95,7 @@ class _ControllerState extends State<Controller> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Controller()),
+                            builder: (context) => const Cameracontroller()),
                       );
                     },
                   ),
@@ -137,6 +134,7 @@ class _ControllerState extends State<Controller> {
                 ],
               ),
             ),
+            // Botón de cierre con animación
             Container(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: GestureDetector(
@@ -149,82 +147,54 @@ class _ControllerState extends State<Controller> {
           ],
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Cuadro de stream
-          Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 0.3,
-              decoration: BoxDecoration(
-                color: isConnected && streamUrl != null
-                    ? Colors.transparent
-                    : const Color.fromARGB(255, 43, 57, 87),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.5),
-                  width: 2,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextField(
+                controller: _ipController,
+                decoration: InputDecoration(
+                  labelText: 'Ingrese la IP del barco',
+                  border: const OutlineInputBorder(),
+                  errorText:
+                      _ipController.text.isEmpty ? 'La IP es requerida' : null,
                 ),
               ),
-              child: isConnected && streamUrl != null
-                  ? Mjpeg(
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                if (_ipController.text.isNotEmpty) {
+                  setState(() {
+                    streamUrl =
+                        'http://${_ipController.text}/stream'; // Construir la URL
+                    isConnected = !isConnected; // Cambiar el estado de conexión
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Por favor ingrese una IP válida.')),
+                  );
+                }
+              },
+              child: Text(isConnected ? 'Desconectar' : 'Conectar'),
+            ),
+            const SizedBox(height: 20),
+            isConnected && streamUrl != null
+                ? Container(
+                    height: 300,
+                    width: 400,
+                    child: Mjpeg(
                       isLive: true,
                       stream: streamUrl!,
-                    )
-                  : const Center(
-                      child: Text(
-                        "Esperando conexión...",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ),
-            ),
-          ),
-          // Espaciado claro entre el cuadro y los controles
-          const SizedBox(height: 20),
-          // Controles de IP y botón
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _ipController,
-                    decoration: const InputDecoration(
-                      labelText: 'Ingrese la IP de la cámara',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    keyboardType: TextInputType.url,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_ipController.text.isNotEmpty) {
-                      setState(() {
-                        streamUrl = 'http://${_ipController.text}/stream';
-                        isConnected = !isConnected;
-                      });
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Por favor ingrese una IP válida.'),
-                        ),
-                      );
-                    }
-                  },
-                  child: Text(isConnected ? "Desconectar" : "Conectar"),
-                ),
-              ],
-            ),
-          ),
-        ],
+                  )
+                  
+                : const Text('Esperando conexión...'),
+          ],
+        ),
       ),
     );
   }

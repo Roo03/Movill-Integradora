@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:movil_integradora/pages/controllers.dart';
+import 'package:movil_integradora/pages/cameracontroller.dart';
 import 'package:movil_integradora/pages/acerca_de.dart';
+import 'package:movil_integradora/pages/controllers.dart';
 import 'package:movil_integradora/pages/soporte.dart';
 import 'package:movil_integradora/widgets/manual_cards.dart';
 
 class Manual extends StatelessWidget {
   const Manual({super.key});
+
+  Widget _buildDrawerItem(
+      {required IconData icon,
+      required String text,
+      required VoidCallback onTap}) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.white),
+      title: Text(
+        text,
+        style: const TextStyle(color: Colors.white),
+      ),
+      onTap: onTap,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,93 +29,114 @@ class Manual extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 30, 44, 63),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black.withOpacity(0.4),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: const [
-          Icon(
-            FeatherIcons.search,
-            color: Colors.white,
-          ),
           SizedBox(width: 16),
         ],
       ),
       drawer: Drawer(
         elevation: 0,
-        child: ListView(
+        backgroundColor: const Color.fromARGB(255, 2, 45, 58),
+        child: Column(
           children: [
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                   colors: [
-                    Colors.blue.withOpacity(0.3),
-                    Colors.blue.withOpacity(0.6),
-                    Colors.blue.withOpacity(0.8),
+                    Color.fromARGB(255, 81, 212, 204),
+                    Color.fromARGB(255, 9, 51, 66)
                   ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
-              child: Stack(
+              child: Row(
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage("assets/img/Logo.jpeg"),
+                    backgroundColor: Colors.transparent,
                   ),
-                  const Center(
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("assets/img/Logo.jpeg"),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "AquaClean",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.control_camera),
-              title: const Text("Controlador"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Controller()),
-                );
-              },
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildDrawerItem(
+                    icon: Icons.control_camera,
+                    text: "Controlador",
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Controller()),
+                      );
+                    },
+                  ),
+                  _buildDrawerItem(
+                    icon: Icons.settings,
+                    text: "Manual",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Manual()),
+                      );
+                    },
+                  ),
+                  _buildDrawerItem(
+                    icon: Icons.contact_mail,
+                    text: "Soporte",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Soporte()),
+                      );
+                    },
+                  ),
+                  _buildDrawerItem(
+                    icon: Icons.info,
+                    text: "Acerca de",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Acercade()),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text("Manual"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Manual()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.contact_mail),
-              title: const Text("Soporte"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Soporte()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text("Acerca de"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Acercade()),
-                );
-              },
+            // Botón de cierre con animación
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.close, color: Colors.white, size: 30),
+              ),
             ),
           ],
         ),
@@ -121,8 +156,7 @@ class Manual extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.black
-                          .withOpacity(0.5), 
+                      Colors.black.withOpacity(0.5),
                       Colors.black.withOpacity(0.5),
                     ],
                     begin: Alignment.topCenter,

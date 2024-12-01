@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Necesario para TextInputFormatter
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:movil_integradora/pages/controllers.dart';
+import 'package:movil_integradora/pages/cameracontroller.dart';
 import 'package:movil_integradora/pages/acerca_de.dart';
 import 'package:movil_integradora/pages/manual.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Soporte extends StatefulWidget {
   const Soporte({super.key});
@@ -13,13 +14,26 @@ class Soporte extends StatefulWidget {
   State<Soporte> createState() => _SoporteState();
 }
 
+Widget _buildDrawerItem(
+    {required IconData icon,
+    required String text,
+    required VoidCallback onTap}) {
+  return ListTile(
+    leading: Icon(icon, color: Colors.white),
+    title: Text(
+      text,
+      style: const TextStyle(color: Colors.white),
+    ),
+    onTap: onTap,
+  );
+}
+
 class _SoporteState extends State<Soporte> {
   final _formKey = GlobalKey<FormState>();
-  final _nombreController = TextEditingController();
-  final _correoController = TextEditingController();
-  final _telefonoController = TextEditingController();
-  final _asuntoController = TextEditingController();
-  final _mensajeController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final topicController = TextEditingController();
+  final messageController = TextEditingController();
 
   String? _validarNombre(String? value) {
     if (value == null || value.isEmpty) {
@@ -30,7 +44,6 @@ class _SoporteState extends State<Soporte> {
     return null;
   }
 
-  // Expresión regular de correo electrónico corregida
   String? _validarCorreo(String? value) {
     if (value == null || value.isEmpty) {
       return 'Por favor, ingrese su correo electrónico';
@@ -41,27 +54,63 @@ class _SoporteState extends State<Soporte> {
     return null;
   }
 
-  // Validación del teléfono que permite solo 10 dígitos
-  String? _validarTelefono(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Por favor, ingrese su número de teléfono';
-    } else if (value.length != 10) {
-      return 'El número debe contener 10 dígitos';
+  Future<void> _enviarFormulario() async {
+    const url = 'https://backend-aquaclean.onrender.com/api/contact';
+
+    final body = {
+      'name': nameController.text,
+      'email': emailController.text,
+      'topic': topicController.text,
+      'message': messageController.text,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Gracias por su opinion')),
+        );
+        _formKey.currentState?.reset();
+        _limpiarCampos();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Error al enviar el formulario: ${response.reasonPhrase}',
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      // Error en la conexión
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No se pudo conectar con el servidor')),
+      );
     }
-    return null;
+  }
+
+  void _limpiarCampos() {
+    nameController.clear();
+    emailController.clear();
+    topicController.clear();
+    messageController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: const Color.fromARGB(255, 30, 44, 63),
+      backgroundColor: const Color.fromARGB(255, 30, 44, 63),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black.withOpacity(0.4),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: const [
-          
           SizedBox(
             width: 16,
           )
@@ -69,80 +118,105 @@ class _SoporteState extends State<Soporte> {
       ),
       drawer: Drawer(
         elevation: 0,
-        child: ListView(
+        backgroundColor: const Color.fromARGB(255, 2, 45, 58),
+        child: Column(
           children: [
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                   colors: [
-                    Colors.blue.withOpacity(0.3),
-                    Colors.blue.withOpacity(0.6),
-                    Colors.blue.withOpacity(0.8),
+                    Color.fromARGB(255, 81, 212, 204),
+                    Color.fromARGB(255, 9, 51, 66)
                   ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
-              child: Stack(
+              child: Row(
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage("assets/img/Logo.jpeg"),
+                    backgroundColor: Colors.transparent,
                   ),
-                  const Center(
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage("assets/img/Logo.jpeg"),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "AquaClean",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.control_camera),
-              title: const Text("Controlador"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Controller()),
-                );
-              },
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildDrawerItem(
+                    icon: Icons.control_camera,
+                    text: "Controlador",
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Cameracontroller()),
+                      );
+                    },
+                  ),
+                  _buildDrawerItem(
+                    icon: Icons.settings,
+                    text: "Manual",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Manual()),
+                      );
+                    },
+                  ),
+                  _buildDrawerItem(
+                    icon: Icons.contact_mail,
+                    text: "Soporte",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Soporte()),
+                      );
+                    },
+                  ),
+                  _buildDrawerItem(
+                    icon: Icons.info,
+                    text: "Acerca de",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Acercade()),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text("Manual"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Manual()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.contact_mail),
-              title: const Text("Soporte"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Soporte()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text("Acerca de"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Acercade()),
-                );
-              },
+            // Botón de cierre con animación
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.close, color: Colors.white, size: 30),
+              ),
             ),
           ],
         ),
@@ -162,8 +236,7 @@ class _SoporteState extends State<Soporte> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.black
-                          .withOpacity(0.5),
+                      Colors.black.withOpacity(0.5),
                       Colors.black.withOpacity(0.5),
                     ],
                     begin: Alignment.topCenter,
@@ -278,24 +351,16 @@ class _SoporteState extends State<Soporte> {
                     child: Theme(
                       data: Theme.of(context).copyWith(
                         inputDecorationTheme: const InputDecorationTheme(
-                          labelStyle: TextStyle(
-                              color: Colors.white), // Color de las etiquetas
-                          hintStyle: TextStyle(
-                              color: Colors
-                                  .white), // Color del texto de sugerencia
+                          labelStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Colors.white),
                           border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white), // Borde blanco
+                            borderSide: BorderSide(color: Colors.white),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors
-                                    .white), // Borde blanco cuando está habilitado
+                            borderSide: BorderSide(color: Colors.white),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors
-                                    .white), // Borde blanco cuando está enfocado
+                            borderSide: BorderSide(color: Colors.white),
                           ),
                         ),
                       ),
@@ -303,18 +368,21 @@ class _SoporteState extends State<Soporte> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
-                            controller: _nombreController,
+                            controller: nameController,
                             decoration: const InputDecoration(
                               labelText: 'Nombre',
                             ),
                             validator: _validarNombre,
-                            style: const TextStyle(
-                                color:
-                                    Colors.white), // Texto ingresado en blanco
+                            style: const TextStyle(color: Colors.white),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$'),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 16),
                           TextFormField(
-                            controller: _correoController,
+                            controller: emailController,
                             decoration: const InputDecoration(
                               labelText: 'Correo Electrónico',
                             ),
@@ -324,35 +392,7 @@ class _SoporteState extends State<Soporte> {
                           ),
                           const SizedBox(height: 16),
                           TextFormField(
-                            controller: _telefonoController,
-                            decoration: const InputDecoration(
-                              labelText: 'Número de Teléfono',
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: _validarTelefono,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(10),
-                            ],
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            controller: _asuntoController,
-                            decoration: const InputDecoration(
-                              labelText: 'Asunto',
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor, ingrese un asunto';
-                              }
-                              return null;
-                            },
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 16),
-                          TextFormField(
-                            controller: _mensajeController,
+                            controller: messageController,
                             decoration: const InputDecoration(
                               labelText: 'Mensaje',
                             ),
@@ -365,22 +405,44 @@ class _SoporteState extends State<Soporte> {
                             },
                             style: const TextStyle(color: Colors.white),
                           ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: topicController,
+                            decoration: const InputDecoration(
+                              labelText: 'Tema a tratar',
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Por favor, ingrese un asunto';
+                              }
+                              return null;
+                            },
+                            style: const TextStyle(color: Colors.white),
+                          ),
                           const SizedBox(height: 20),
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
+                                  _enviarFormulario();
+                                  // Mostrar mensaje de confirmación
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content: Text('Formulario Enviado')),
+                                      content: Text('Formulario Enviado'),
+                                    ),
                                   );
+                                 
+                                  nameController.clear();
+                                  emailController.clear();
+                                  messageController.clear();
+                                  topicController.clear();
                                 }
                               },
                               child: const Text('Enviar'),
                             ),
                           ),
                         ],
-                      ),
+                      ), 
                     ),
                   ),
                   const SizedBox(height: 40),
