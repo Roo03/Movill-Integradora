@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movil_integradora/pages/cameracontroller.dart';
 import 'package:movil_integradora/pages/acerca_de.dart';
+import 'package:movil_integradora/pages/controllers.dart';
 import 'package:movil_integradora/pages/manual.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Soporte extends StatefulWidget {
   const Soporte({super.key});
@@ -34,6 +36,51 @@ class _SoporteState extends State<Soporte> {
   final emailController = TextEditingController();
   final topicController = TextEditingController();
   final messageController = TextEditingController();
+
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  bool _isNotificationEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    const initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    _loadNotificationPreference(); // Cargar preferencias de notificación
+  }
+
+  Future<void> _loadNotificationPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isNotificationEnabled = prefs.getBool('notifications_enabled') ?? false;
+    });
+  }
+
+  Future<void> _mostrarNotificacion() async {
+    if (_isNotificationEnabled) {
+      const androidDetails = AndroidNotificationDetails(
+        'soporte_channel', // ID del canal
+        'Notificaciones de Soporte',
+        channelDescription: 'Notificaciones para el envío de formularios',
+        importance: Importance.high,
+        priority: Priority.high,
+        playSound: true,
+      );
+
+      const notificationDetails = NotificationDetails(android: androidDetails);
+
+      await flutterLocalNotificationsPlugin.show(
+        0,
+        '¡Gracias por tus comentarioso!',
+        'Con tu opinion, nos ayudas a crecer y mejorar.',
+        notificationDetails,
+      );
+    }
+  }
 
   String? _validarNombre(String? value) {
     if (value == null || value.isEmpty) {
@@ -71,23 +118,26 @@ class _SoporteState extends State<Soporte> {
         body: jsonEncode(body),
       );
 
-      if (response.statusCode == 200) {
+      // Verificar si el código de respuesta es exitoso (200 o 201)
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        _mostrarNotificacion();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gracias por su opinion')),
+          const SnackBar(content: Text('¡Formulario enviado correctamente!')),
         );
         _formKey.currentState?.reset();
         _limpiarCampos();
       } else {
+        // Manejo de códigos de error (distintos de 200 y 201)
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Error al enviar el formulario: ${response.reasonPhrase}',
+              'Error al enviar el formulario. Código: ${response.statusCode}, Detalles: ${response.body}',
             ),
           ),
         );
       }
     } catch (e) {
-      // Error en la conexión
+      // Manejo de errores de conexión o excepciones
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('No se pudo conectar con el servidor')),
       );
@@ -169,7 +219,7 @@ class _SoporteState extends State<Soporte> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Cameracontroller()),
+                            builder: (context) => const Controller()),
                       );
                     },
                   ),
@@ -425,13 +475,14 @@ class _SoporteState extends State<Soporte> {
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   _enviarFormulario();
+                                  _mostrarNotificacion();
                                   // Mostrar mensaje de confirmación
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text('Formulario Enviado'),
                                     ),
                                   );
-                                 
+
                                   nameController.clear();
                                   emailController.clear();
                                   messageController.clear();
@@ -442,7 +493,7 @@ class _SoporteState extends State<Soporte> {
                             ),
                           ),
                         ],
-                      ), 
+                      ),
                     ),
                   ),
                   const SizedBox(height: 40),

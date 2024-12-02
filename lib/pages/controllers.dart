@@ -30,6 +30,7 @@ class _ControllerState extends State<Controller> {
   String? streamUrl;
   bool isConnected = false;
 
+
   @override
   Widget build(BuildContext context) {
     MediaQuery.of(context).orientation == Orientation.landscape;
